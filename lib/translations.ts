@@ -572,6 +572,15 @@ export const translations: Translations = {
         locationLabel: "Location",
       },
     },
+    team: {
+      about: "About",
+      expertise: "Expertise",
+      techStack: "Tech Stack",
+      tools: "Tools",
+      viewLinkedIn: "View LinkedIn Profile",
+      scheduleMeet: "Schedule a Meeting",
+      backHome: "Back to Home",
+    },
     footer: {
       tagline: "AI-First Tech Experts",
       rights: "All rights reserved.",
@@ -1654,6 +1663,15 @@ export const translations: Translations = {
         phoneLabel: "Teléfono",
         locationLabel: "Ubicación",
       },
+    },
+    team: {
+      about: "Acerca de",
+      expertise: "Especialidades",
+      techStack: "Stack Tecnológico",
+      tools: "Herramientas",
+      viewLinkedIn: "Ver Perfil de LinkedIn",
+      scheduleMeet: "Agendar una Reunión",
+      backHome: "Volver al Inicio",
     },
     footer: {
       tagline: "Expertos Tech AI-First",
