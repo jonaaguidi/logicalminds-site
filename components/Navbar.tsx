@@ -127,6 +127,20 @@ export default function Navbar() {
     setExpandedMobileLink(null);
 
     requestAnimationFrame(() => {
+      const isMobile = window.innerWidth < 1024;
+
+      if (isMobile) {
+        // Fast open: just slide in, show everything immediately
+        gsap.set(backdropRef.current, { opacity: 1 });
+        gsap.set(lineRef.current, { scaleX: 1, opacity: 1 });
+        linksRef.current.filter(Boolean).forEach((link) => gsap.set(link, { y: "0%", opacity: 1 }));
+        numbersRef.current.filter(Boolean).forEach((num) => gsap.set(num, { opacity: 1, y: 0, rotateZ: 0, scale: 1 }));
+        accentLinesRef.current.filter(Boolean).forEach((line) => gsap.set(line, { scaleX: 1, opacity: 1 }));
+        gsap.set(footerRef.current, { y: 0, opacity: 1 });
+        gsap.fromTo(sidebarRef.current, { x: "100%" }, { x: "0%", duration: 0.3, ease: "power3.out" });
+        return;
+      }
+
       const tl = gsap.timeline();
 
       tl.fromTo(
@@ -186,6 +200,17 @@ export default function Navbar() {
   }, []);
 
   const closeMenu = useCallback(() => {
+    const isMobile = window.innerWidth < 1024;
+
+    if (isMobile) {
+      gsap.to(sidebarRef.current, {
+        x: "100%", duration: 0.25, ease: "power3.in",
+        onComplete: () => setMenuOpen(false),
+      });
+      gsap.to(backdropRef.current, { opacity: 0, duration: 0.2 });
+      return;
+    }
+
     const tl = gsap.timeline({
       onComplete: () => setMenuOpen(false),
     });
@@ -553,7 +578,7 @@ export default function Navbar() {
           {/* Sidebar Panel */}
           <div
             ref={sidebarRef}
-            className="fixed top-0 right-0 bottom-0 z-[56] w-full max-w-md overflow-y-auto border-l border-gray-200 bg-white/95 backdrop-blur-2xl shadow-[-8px_0_40px_rgba(0,0,0,0.08)]"
+            className="fixed top-0 right-0 bottom-0 z-[56] w-full max-w-md overflow-hidden border-l border-gray-200 bg-white/95 backdrop-blur-2xl shadow-[-8px_0_40px_rgba(0,0,0,0.08)]"
             style={{ transform: "translateX(100%)" }}
           >
             {/* Subtle violet gradient accents */}

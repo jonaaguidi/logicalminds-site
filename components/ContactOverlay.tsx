@@ -80,6 +80,20 @@ export default function ContactOverlay() {
 
   const animateOpen = useCallback(() => {
     requestAnimationFrame(() => {
+      const isMobile = window.innerWidth < 1024;
+
+      if (isMobile) {
+        // Instant show on mobile — no stagger, no blur filters
+        gsap.set(overlayRef.current, { clipPath: "inset(0 0 0% 0)", opacity: 1 });
+        gsap.set(leftRef.current, { y: 0, opacity: 1, filter: "none" });
+        gsap.set(formCardRef.current, { y: 0, opacity: 1, filter: "none" });
+        formFieldsRef.current.filter(Boolean).forEach((field) => {
+          gsap.set(field, { y: 0, opacity: 1, filter: "none" });
+        });
+        gsap.set(bottomRef.current, { y: 0, opacity: 1, filter: "none" });
+        return;
+      }
+
       const tl = gsap.timeline();
       tlRef.current = tl;
 
@@ -147,6 +161,18 @@ export default function ContactOverlay() {
   }, []);
 
   const animateClose = useCallback(() => {
+    const isMobile = window.innerWidth < 1024;
+
+    if (isMobile) {
+      gsap.to(overlayRef.current, {
+        opacity: 0,
+        duration: 0.2,
+        ease: "power2.in",
+        onComplete: () => closeContact(),
+      });
+      return;
+    }
+
     const tl = gsap.timeline({
       onComplete: () => closeContact(),
     });
@@ -667,18 +693,18 @@ export default function ContactOverlay() {
               </div>
 
               {/* Submit + Schedule — side by side */}
-              <div ref={bottomRef} className="relative mt-5 flex gap-3" style={{ opacity: 0 }}>
+              <div ref={bottomRef} className="relative mt-5 flex flex-col gap-2 sm:flex-row sm:gap-3" style={{ opacity: 0 }}>
                 <button
                   type="submit"
                   disabled={submitting}
                   className="group/btn relative flex-1 cursor-pointer overflow-hidden rounded-full bg-gradient-to-r from-violet-600 to-violet-500 transition-all duration-500 hover:from-violet-700 hover:to-violet-600 hover:shadow-[0_6px_24px_rgba(124,58,237,0.35)] hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 disabled:pointer-events-none"
                 >
                   <span className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/20 to-white/0 opacity-0 transition-opacity duration-500 group-hover/btn:opacity-100" />
-                  <span className="relative flex items-center justify-center gap-2 py-3 text-sm font-semibold text-white">
+                  <span className="relative flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-white sm:gap-2 sm:py-3 sm:text-sm">
                     {submitting ? t("contact.form.sending") : t("contact.form.send")}
                     {!submitting && (
                       <svg
-                        className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"
+                        className="h-3.5 w-3.5 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 sm:h-4 sm:w-4"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -698,9 +724,9 @@ export default function ContactOverlay() {
                   href="https://calendly.com/logicalminds/30-min?back=1&month=2026-04"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/cal flex flex-1 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white py-3 text-sm transition-all duration-300 hover:border-violet-300 hover:shadow-[0_4px_20px_rgba(124,58,237,0.08)]"
+                  className="group/cal flex flex-1 items-center justify-center gap-1.5 rounded-full border border-gray-200 bg-white py-2.5 text-xs transition-all duration-300 hover:border-violet-300 hover:shadow-[0_4px_20px_rgba(124,58,237,0.08)] sm:gap-2 sm:py-3 sm:text-sm"
                 >
-                  <svg className="h-4 w-4 shrink-0 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <svg className="h-3.5 w-3.5 shrink-0 text-violet-500 sm:h-4 sm:w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                   </svg>
                   <span className="font-semibold text-gray-900 transition-colors group-hover/cal:text-violet-600">
