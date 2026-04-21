@@ -23,9 +23,16 @@ export default function BlurText({
     const container = containerRef.current;
     if (!container) return;
 
+    const words = container.querySelectorAll(".blur-word");
+
+    // Skip entrance animations on mobile/tablet for performance
+    if (window.innerWidth < 1024) {
+      gsap.set(words, { opacity: 1, filter: "blur(0px)", y: 0 });
+      return;
+    }
+
     hasAnimated.current = false;
 
-    const words = container.querySelectorAll(".blur-word");
     gsap.set(words, { opacity: 0, filter: "blur(10px)", y: 20 });
 
     const observer = new IntersectionObserver(

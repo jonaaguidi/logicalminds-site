@@ -33,9 +33,11 @@ export default function SplitText({
   const containerRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTabletOrBelow, setIsTabletOrBelow] = useState(false);
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768);
+    setIsTabletOrBelow(window.innerWidth < 1024);
   }, []);
 
   // On mobile, force "words" split to reduce animated elements
@@ -45,9 +47,16 @@ export default function SplitText({
     const container = containerRef.current;
     if (!container) return;
 
+    const elements = container.querySelectorAll(".split-element");
+
+    // Skip entrance animations on mobile/tablet for performance
+    if (isTabletOrBelow) {
+      gsap.set(elements, { opacity: 1, y: 0, x: 0, filter: "none" });
+      return;
+    }
+
     hasAnimated.current = false;
 
-    const elements = container.querySelectorAll(".split-element");
     gsap.set(elements, from);
 
     const observer = new IntersectionObserver(
@@ -70,7 +79,7 @@ export default function SplitText({
 
     observer.observe(container);
     return () => observer.disconnect();
-  }, [text, delay, duration, ease, effectiveSplit, from, to, threshold, rootMargin, onComplete]);
+  }, [text, delay, duration, ease, effectiveSplit, isTabletOrBelow, from, to, threshold, rootMargin, onComplete]);
 
   const items = effectiveSplit === "chars" ? text.split("") : text.split(" ");
 

@@ -22,7 +22,12 @@ export default function ScrollFloat({
     const el = ref.current;
     if (!el) return;
 
-    // Use IntersectionObserver instead of scroll listener to avoid layout thrashing
+    // Skip entrance animations on mobile/tablet for performance
+    if (window.innerWidth < 1024) {
+      gsap.set(el, { y: 0, opacity: 1 });
+      return;
+    }
+
     gsap.set(el, { y: offsetY, opacity: 0 });
 
     const observer = new IntersectionObserver(

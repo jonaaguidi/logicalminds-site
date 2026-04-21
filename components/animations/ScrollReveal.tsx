@@ -29,6 +29,12 @@ export default function ScrollReveal({
     const el = ref.current;
     if (!el) return;
 
+    // Skip entrance animations on mobile/tablet for performance
+    if (window.innerWidth < 1024) {
+      gsap.set(el, { opacity: 1, x: 0, y: 0 });
+      return;
+    }
+
     hasAnimated.current = false;
 
     const axes = {

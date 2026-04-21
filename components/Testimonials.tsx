@@ -20,6 +20,19 @@ export default function Testimonials() {
   const noteRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Skip entrance animations on mobile/tablet for performance
+    const isTabletOrBelow = window.innerWidth < 1024;
+    if (isTabletOrBelow) {
+      if (badgeRef.current) gsap.set(badgeRef.current, { opacity: 1 });
+      const words = headlineRef.current?.querySelectorAll(".word");
+      if (words) gsap.set(words, { opacity: 1, y: 0, filter: "none" });
+      if (subtitleRef.current) gsap.set(subtitleRef.current, { opacity: 1, y: 0, filter: "none" });
+      if (ctaRef.current) gsap.set(ctaRef.current, { opacity: 1, scale: 1 });
+      const noteItems = noteRef.current?.querySelectorAll(".note-item");
+      if (noteItems) gsap.set(noteItems, { opacity: 1, y: 0 });
+      return;
+    }
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         badgeRef.current,
