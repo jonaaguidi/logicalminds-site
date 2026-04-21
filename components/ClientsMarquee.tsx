@@ -56,8 +56,9 @@ export default function ClientsMarquee() {
         background: "#f8f9fc",
       }}
     >
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 flex items-center gap-8">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 flex items-center gap-4 sm:gap-8">
         <span
+          className="hidden sm:block"
           style={{
             flex: "0 0 auto",
             fontSize: 11,
@@ -73,16 +74,16 @@ export default function ClientsMarquee() {
         {/* Marquee container */}
         <div className="relative flex-1 overflow-hidden">
           {/* Fade edges */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#f8f9fc] to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#f8f9fc] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 sm:w-16 bg-gradient-to-r from-[#f8f9fc] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 sm:w-16 bg-gradient-to-l from-[#f8f9fc] to-transparent" />
 
-          <div className="flex animate-[marquee_28s_linear_infinite]">
+          <div className="flex animate-[marquee_16s_linear_infinite] sm:animate-[marquee_28s_linear_infinite]">
             {[...TOOLS, ...TOOLS].map((tool, i) => {
               const Icon = tool.icon;
               return (
                 <span
                   key={`${tool.name}-${i}`}
-                  className="shrink-0 px-5 flex items-center gap-1.5"
+                  className="shrink-0 px-2.5 sm:px-5 flex items-center gap-1 sm:gap-1.5"
                   style={{
                     fontWeight: 600,
                     fontSize: 15,
@@ -91,8 +92,8 @@ export default function ClientsMarquee() {
                     opacity: 0.85,
                   }}
                 >
-                  <Icon className="h-6 w-6 shrink-0" />
-                  {tool.name}
+                  <Icon className="h-4 w-4 sm:h-6 sm:w-6 shrink-0" />
+                  <span className="text-xs sm:text-[15px]">{tool.name}</span>
                 </span>
               );
             })}

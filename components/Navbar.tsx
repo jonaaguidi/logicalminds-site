@@ -424,19 +424,6 @@ export default function Navbar() {
               </span>
             </button>
           ))}
-          {/* "View all" link to scroll to section */}
-          <button
-            onClick={() => handleClick("services")}
-            className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-left transition-all duration-200 hover:bg-violet-50 cursor-pointer"
-          >
-            <span className="h-2 w-2 rounded-full shrink-0 bg-violet-300" />
-            <span className="text-sm font-medium text-violet-500">
-              {t("services.title")}
-              <svg className="ml-1 inline h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </span>
-          </button>
         </div>
       );
     }
@@ -577,7 +564,7 @@ export default function Navbar() {
             />
 
             {/* Sidebar Content */}
-            <div className="relative flex h-full flex-col justify-center px-8 sm:px-10">
+            <div className="relative flex h-full flex-col pt-24 px-8 sm:px-10">
               {/* Divider Line */}
               <div
                 ref={lineRef}
@@ -672,37 +659,29 @@ export default function Navbar() {
 
             </div>
 
-            {/* Footer — fixed at bottom */}
+            {/* Footer */}
             <div
               ref={footerRef}
-              className="absolute bottom-0 left-0 right-0 px-8 sm:px-10 pb-8"
+              className="mt-auto px-8 sm:px-10 pb-8 pt-4"
               style={{ opacity: 0 }}
             >
               <div className="h-px mb-5 bg-gradient-to-r from-gray-200 via-gray-100 to-transparent" />
               <div className="flex gap-6 mb-3">
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.instagram.com/logicalminds.co/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-gray-400 transition-colors duration-300 hover:text-violet-600 cursor-pointer"
+                >
+                  Instagram
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/logicalminds-co/posts/?feedView=all"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-gray-400 transition-colors duration-300 hover:text-violet-600 cursor-pointer"
                 >
                   LinkedIn
-                </a>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-gray-400 transition-colors duration-300 hover:text-violet-600 cursor-pointer"
-                >
-                  Twitter
-                </a>
-                <a
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-gray-400 transition-colors duration-300 hover:text-violet-600 cursor-pointer"
-                >
-                  GitHub
                 </a>
               </div>
               <p className="text-xs text-gray-400">
