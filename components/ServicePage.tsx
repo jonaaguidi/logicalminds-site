@@ -1017,9 +1017,9 @@ export default function ServicePage({ serviceKey }: { serviceKey: ServiceView })
               </div>
             </ScrollReveal>
 
-            {/* Preview column — desktop only */}
+            {/* Preview column */}
             <ScrollReveal delay={0.2}>
-              <div className="hidden lg:block">
+              <div className="mt-8 lg:mt-0">
                 {serviceKey === "logicalMvp" ? (
                   <MvpHeroGantt />
                 ) : (

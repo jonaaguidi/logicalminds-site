@@ -54,6 +54,7 @@ export default function ContactOverlay() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const overlayRef = useRef<HTMLDivElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
@@ -237,6 +238,33 @@ export default function ContactOverlay() {
       0.15
     );
   }, [closeContact]);
+
+  const validate = (): boolean => {
+    const form = formCardRef.current;
+    if (!form) return false;
+    const errors: Record<string, string> = {};
+
+    const name = (form.querySelector("#contact-name") as HTMLInputElement)?.value.trim();
+    const email = (form.querySelector("#contact-email") as HTMLInputElement)?.value.trim();
+    const service = (form.querySelector("#contact-service") as HTMLSelectElement)?.value;
+
+    if (!name) errors.name = t("contact.form.validation.nameRequired");
+    if (!email) errors.email = t("contact.form.validation.emailRequired");
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = t("contact.form.validation.emailInvalid");
+    if (!service) errors.service = t("contact.form.validation.serviceRequired");
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const clearFieldError = (field: string) => {
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -468,6 +496,7 @@ export default function ContactOverlay() {
               onSubmit={async (e) => {
                 e.preventDefault();
                 setError("");
+                if (!validate()) return;
                 setSubmitting(true);
                 const form = e.currentTarget;
                 const data = {
@@ -546,9 +575,11 @@ export default function ContactOverlay() {
                   <input
                     type="text"
                     id="contact-name"
-                    className={inputClass}
+                    className={fieldErrors.name ? `${inputClass} !border-red-400 focus:!border-red-500 focus:!ring-red-500` : inputClass}
                     placeholder={t("contact.form.name")}
+                    onChange={() => clearFieldError("name")}
                   />
+                  {fieldErrors.name && <p className="mt-1 text-xs text-red-500">{fieldErrors.name}</p>}
                 </div>
 
                 {/* Email */}
@@ -562,9 +593,11 @@ export default function ContactOverlay() {
                   <input
                     type="email"
                     id="contact-email"
-                    className={inputClass}
+                    className={fieldErrors.email ? `${inputClass} !border-red-400 focus:!border-red-500 focus:!ring-red-500` : inputClass}
                     placeholder={t("contact.form.email")}
+                    onChange={() => clearFieldError("email")}
                   />
+                  {fieldErrors.email && <p className="mt-1 text-xs text-red-500">{fieldErrors.email}</p>}
                 </div>
 
                 {/* Company */}
@@ -609,8 +642,9 @@ export default function ContactOverlay() {
                   </label>
                   <select
                     id="contact-service"
-                    className={selectClass}
+                    className={fieldErrors.service ? `${selectClass} !border-red-400 focus:!border-red-500 focus:!ring-red-500` : selectClass}
                     defaultValue=""
+                    onChange={() => clearFieldError("service")}
                   >
                     <option value="" disabled>
                       {t("contact.form.selectPlaceholder")}
@@ -621,6 +655,7 @@ export default function ContactOverlay() {
                       </option>
                     ))}
                   </select>
+                  {fieldErrors.service && <p className="mt-1 text-xs text-red-500">{fieldErrors.service}</p>}
                 </div>
 
                 {/* Budget */}

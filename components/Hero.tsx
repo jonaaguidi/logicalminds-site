@@ -56,7 +56,7 @@ export default function Hero() {
       />
 
       {/* Content — single column mobile, two columns desktop */}
-      <div className="relative z-[10] mx-auto w-full max-w-[1360px] px-5 sm:px-8 pt-[110px] md:pt-[130px] lg:pt-[140px] pb-12 lg:pb-16 grid grid-cols-1 md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-center">
+      <div className="relative z-[10] mx-auto w-full max-w-[1360px] px-5 sm:px-8 pt-[140px] md:pt-[130px] lg:pt-[140px] pb-12 lg:pb-16 grid grid-cols-1 md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-center">
         {/* Left — text content */}
         <div>
           {/* Overline badge */}
@@ -72,7 +72,7 @@ export default function Hero() {
             className="mb-0"
             style={{
               fontFamily: '"Alvar Essential", var(--font-sans), sans-serif',
-              fontSize: "clamp(32px, 6.2vw, 82px)",
+              fontSize: "clamp(38px, 6.2vw, 82px)",
               fontWeight: 900,
               lineHeight: 0.94,
               letterSpacing: "-0.03em",
@@ -200,8 +200,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right — Gantt Chart (hidden on mobile, visible from md) */}
-        <div className="hidden md:block" style={{ marginLeft: -120, marginRight: 0, marginTop: -16, transform: "scale(0.90)", transformOrigin: "top center" }}>
+        {/* Right — Gantt Chart */}
+        <div className="mt-8 md:mt-0 md:-ml-[120px]" style={{ transform: "scale(0.90)", transformOrigin: "top center" }}>
           <HeroGanttChart t={(key: string) => t(key) as string} />
         </div>
       </div>

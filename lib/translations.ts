@@ -20,9 +20,9 @@ export const translations: Translations = {
       headline2: "AI-First Software",
       badge: "Human + AI · Digital Products Agency",
       overline: "Human + AI · Digital products agency",
-      t1: "We ship",
+      t1: "We build",
       t2: "products",
-      t3: "that scales.",
+      t3: "that scale.",
       subtitle: "A hybrid team of engineers, designers, and AI agents. From prototype to production in ",
       subtitleBold: "12 weeks.",
       cta: "Get Started",
@@ -752,6 +752,12 @@ export const translations: Translations = {
           "1to3months": "1 – 3 Months",
           "3to6months": "3 – 6 Months",
           flexible: "Flexible",
+        },
+        validation: {
+          nameRequired: "Name is required",
+          emailRequired: "Email is required",
+          emailInvalid: "Please enter a valid email",
+          serviceRequired: "Please select a service",
         },
       },
       info: {
@@ -2038,6 +2044,12 @@ export const translations: Translations = {
           "1to3months": "1 – 3 Meses",
           "3to6months": "3 – 6 Meses",
           flexible: "Flexible",
+        },
+        validation: {
+          nameRequired: "El nombre es requerido",
+          emailRequired: "El email es requerido",
+          emailInvalid: "Ingresa un email válido",
+          serviceRequired: "Selecciona un servicio",
         },
       },
       info: {

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-const NOTION_API_KEY = process.env.NOTION_API_KEY!;
-const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID!;
+const NOTION_API_KEY = process.env.NOTION_API_KEY ?? "";
+const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID ?? "";
 
 /* Map form service keys → Notion select values */
 const serviceMap: Record<string, string> = {
@@ -43,6 +43,14 @@ interface ContactBody {
 
 export async function POST(request: Request) {
   try {
+    if (!NOTION_API_KEY || !NOTION_DATABASE_ID) {
+      console.error("Contact API: Missing NOTION_API_KEY or NOTION_DATABASE_ID env vars");
+      return NextResponse.json(
+        { error: "Server configuration error" },
+        { status: 500 },
+      );
+    }
+
     const body: ContactBody = await request.json();
 
     if (!body.name || !body.email) {

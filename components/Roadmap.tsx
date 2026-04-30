@@ -712,7 +712,11 @@ export default function Roadmap() {
 
           {/* Right column — Product Mockup */}
           <ScrollReveal delay={0.2}>
-            <ProductMockup />
+            <div className="-mx-2 overflow-x-auto px-2 md:mx-0 md:overflow-visible md:px-0">
+              <div className="min-w-[340px] md:min-w-0">
+                <ProductMockup />
+              </div>
+            </div>
           </ScrollReveal>
         </div>
       </div>
